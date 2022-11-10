@@ -1,7 +1,8 @@
 const puppeteer = require('puppeteer')
+const codeObj = require('./codes')
 
 const loginLink = 'https://www.hackerrank.com/auth/login'
-const mail = 'fareya7568@invodua.com'
+const mail = 'tewoxisi@decabg.eu'
 const password = 'helloworld'
 
 let browserOpen = puppeteer.launch({
@@ -43,7 +44,7 @@ browserOpen.then(function (browserObj) {
     return allChallengesPromise
 }).then(function (questionArr) {
     console.log('Number of Questions : ', questionArr.length)
-    let questionWillBeSolved = questionSolver(page, questionArr[0], )
+    let questionWillBeSolved = questionSolver(page, questionArr[0], codeObj.answers[0])
     return questionWillBeSolved
 })
 
@@ -62,18 +63,50 @@ function waitAndClick(selector, cPage) {
     })
 }
 
-function questionSolver(page, question, answer){
-    return new Promise(function(resolve, reject){
+function questionSolver(page, question, answer) {
+    return new Promise(function (resolve, reject) {
         let questionWillBeClicked = question.click()
-        questionWillBeClicked.then(function(){
-            let EditorInFocusPromise = waitAndClick('.monaco-editor.no-user-select.vs' , page)
+        questionWillBeClicked.then(function () {
+            let EditorInFocusPromise = waitAndClick('.monaco-editor.no-user-select.vs', page)
             return EditorInFocusPromise
-        }).then(function(){
+        }).then(function () {
             return waitAndClick('.checkbox-input', page)
+        }).then(function () {
+            return page.waitForSelector('.custom-input.theme-old.size-medium', page)
+        }).then(function () {
+            return page.type('.custom-input.theme-old.size-medium', answer, { delay: 10 })
+        }).then(function () {
+            let ctrlIsPressed = page.keyboard.down('Control')
+            return ctrlIsPressed
+        }).then(function () {
+            let AisPressed = page.keyboard.press('A', { delay: 100 })
+            return AisPressed
+        }).then(function () {
+            let XisPressed = page.keyboard.press('X', { delay: 100 })
+        }).then(function () {
+            let ctrlIsUnPressed = page.keyboard.up('Control')
+            return ctrlIsUnPressed
+        }).then(function () {
+            let mainEditorInFocus = waitAndClick('.monaco-editor.no-user-select.vs', page)
+            return mainEditorInFocus
+        }).then(function () {
+            let ctrlIsPressed = page.keyboard.down('Control')
+            return ctrlIsPressed
+        }).then(function () {
+            let AisPressed = page.keyboard.press('A', { delay: 100 })
+            return AisPressed
+        }).then(function () {
+            let VisPressed = page.keyboard.press('V', { delay: 100 })
+            return VisPressed
+        }).then(function () {
+            let ctrlIsUnPressed = page.keyboard.up('Control')
+            return ctrlIsUnPressed
         }).then(function(){
-            return page.waitForSelector('.textarea.custominput', page)
+            return page.click('.ui-btn.ui-btn-normal.ui-btn-primary.pull-right.hr-monaco-submit.ui-btn-styled', {delay : 50})
         }).then(function(){
-            return page.type('.textarea.custominput', answer, {delay : 10})
+            resolve()
+        }).then(function(){
+            reject()
         })
     })
 }

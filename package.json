@@ -6,8 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MDANAS00/HackerRank-Automation.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MDANAS00/HackerRank-Automation/issues"
+  },
+  "homepage": "https://github.com/MDANAS00/HackerRank-Automation#readme",
   "dependencies": {
     "puppeteer": "^19.2.2"
   }
